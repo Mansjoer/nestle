@@ -49,7 +49,7 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
       <main className="w-full">
         <div className="w-full max-w-md mx-auto bg-card rounded-3xl shadow-lg p-6 space-y-6">
             <div className="text-center">
-                <p className="font-bold text-lg text-gray-800">Your level: {user.level}</p>
+                <p className="font-bold text-lg text-gray-900">Your level: {user.level}</p>
                 <p className="text-sm text-gray-500">Still calculating your rank</p>
             </div>
           
