@@ -1,88 +1,91 @@
 "use client";
 
-import { useState, useMemo } from 'react';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import type { User, Activity } from '@/types';
-import { ALL_ACTIVITIES } from '@/lib/activities';
+import { useState, useEffect } from 'react';
+import type { User } from '@/types';
 import ProgressTracker from './ProgressTracker';
-import ActivityList from './ActivityList';
 import QrCodeModal from './QrCodeModal';
+import WelcomeScreen from './WelcomeScreen';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import { Puzzle } from 'lucide-react';
+import { ArrowRight, Trophy } from 'lucide-react';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 type EventDashboardProps = {
   initialUser: User;
 };
 
 export default function EventDashboard({ initialUser }: EventDashboardProps) {
-  const { toast } = useToast();
   const [user, setUser] = useState<User>(initialUser);
+  const [showWelcome, setShowWelcome] = useState(true);
 
-  const activitiesWithIcons = useMemo(() => {
-    return user.activities.map(userActivity => {
-      const masterActivity = ALL_ACTIVITIES.find(a => a.id === userActivity.id);
-      return {
-        ...userActivity,
-        icon: masterActivity?.icon || Puzzle, // Fallback icon
-      };
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, "users", initialUser.id), (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setUser({
+          id: doc.id,
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          score: data.score,
+          activities: data.activities,
+          level: data.level,
+        });
+      }
     });
-  }, [user.activities]);
+
+    // Cleanup subscription on unmount
+    return () => unsub();
+  }, [initialUser.id]);
   
-  const [activities, setActivities] = useState<Activity[]>(activitiesWithIcons);
+  if (showWelcome) {
+    return <WelcomeScreen onStart={() => setShowWelcome(false)} />;
+  }
 
-  const handleActivityToggle = async (activityId: string, completed: boolean) => {
-    const updatedActivities = activities.map(activity =>
-      activity.id === activityId ? { ...activity, completed } : activity
-    );
+  const progressPercentage = (user.score / user.activities.length) * 100;
 
-    const newScore = updatedActivities.filter(a => a.completed).length;
-
-    setActivities(updatedActivities);
-    setUser(prevUser => ({ ...prevUser, score: newScore }));
-
-    try {
-      const userDocRef = doc(db, 'users', user.id);
-      await updateDoc(userDocRef, {
-        score: newScore,
-        activities: updatedActivities.map(({ icon, ...rest }) => rest),
-      });
-    } catch (error) {
-      console.error("Error updating user progress:", error);
-      toast({
-        title: "Error",
-        description: "Could not save your progress. Please refresh and try again.",
-        variant: "destructive",
-      });
-      // Revert state on error
-      setActivities(activities);
-      setUser(user);
-    }
-  };
-  
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="bg-card border-b border-border p-4 shadow-sm">
+    <div className="min-h-screen bg-accent">
+      <header className="bg-card shadow-sm p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold font-headline text-primary">
+          <h1 className="text-xl font-bold text-gray-800">
             Welcome, {user.fullName}!
           </h1>
           <QrCodeModal userId={user.id} />
         </div>
       </header>
-      <main className="container mx-auto p-4 sm:p-8">
-        <div className="w-full max-w-2xl mx-auto">
-          <Card className="shadow-2xl overflow-hidden">
-            <CardHeader>
-              <CardTitle className="font-headline text-2xl">Your Progress</CardTitle>
-              <CardDescription>Complete activities to boost your score.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-8">
-              <ProgressTracker score={user.score} total={activities.length} />
-              <ActivityList activities={activities} onActivityToggle={handleActivityToggle} />
-            </CardContent>
-          </Card>
+      <main className="p-4 sm:p-6">
+        <div className="w-full max-w-md mx-auto bg-card rounded-3xl shadow-lg p-6 space-y-6">
+            <div className="text-center">
+                <p className="font-bold text-lg text-gray-800">Your level: {user.level}</p>
+                <p className="text-sm text-gray-500">Still calculating your rank</p>
+            </div>
+          
+            <ProgressTracker value={progressPercentage} />
+
+            <div className="space-y-4">
+                <Card className="bg-gray-50 rounded-2xl">
+                    <CardContent className="p-4 flex justify-between items-center">
+                        <div>
+                            <p className="font-bold text-gray-800">Your Points: {user.score}</p>
+                            <p className="text-xs text-gray-500">Drive and report to earn points. Learn how else to rack 'em up.</p>
+                        </div>
+                        <ArrowRight className="h-5 w-5 text-gray-400" />
+                    </CardContent>
+                </Card>
+                <Card className="bg-gray-50 rounded-2xl">
+                     <CardContent className="p-4 flex justify-between items-center">
+                        <div className="flex items-center gap-4">
+                            <Trophy className="h-6 w-6 text-primary" />
+                            <div>
+                                <p className="font-bold text-gray-800">About Levels</p>
+                                <p className="text-xs text-gray-500">Advance to get more reporting influence and a customized Wazer.</p>
+                            </div>
+                        </div>
+                        <ArrowRight className="h-5 w-5 text-gray-400" />
+                    </CardContent>
+                </Card>
+            </div>
         </div>
       </main>
     </div>

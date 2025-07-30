@@ -21,6 +21,8 @@ const formSchema = z.object({
   phone: z.string().min(10, { message: 'Phone number must be at least 10 digits.' }).regex(/^\+?[0-9\s-()]*$/, 'Invalid phone number format.'),
 });
 
+const LEVELS = ["Baby Wazer", "Wazer", "Royal Wazer", "King Wazer", "Ultimate Wazer"];
+
 export default function RegistrationForm() {
   const router = useRouter();
   const { toast } = useToast();
@@ -38,8 +40,7 @@ export default function RegistrationForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      const shuffledActivities = [...ALL_ACTIVITIES].sort(() => 0.5 - Math.random());
-      const userActivities = shuffledActivities.slice(0, 5).map(activity => ({
+      const userActivities = ALL_ACTIVITIES.map(activity => ({
         id: activity.id,
         name: activity.name,
         completed: false,
@@ -51,6 +52,7 @@ export default function RegistrationForm() {
         phone: values.phone,
         score: 0,
         activities: userActivities,
+        level: LEVELS[0], // Start at Baby Wazer
       });
 
       router.push(`/${docRef.id}`);
@@ -67,7 +69,7 @@ export default function RegistrationForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="fullName"
@@ -107,8 +109,8 @@ export default function RegistrationForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? <Loader2 className="animate-spin" /> : 'Register and Start'}
+        <Button type="submit" className="w-full !mt-6" disabled={isSubmitting}>
+          {isSubmitting ? <Loader2 className="animate-spin" /> : 'Register'}
         </Button>
       </form>
     </Form>

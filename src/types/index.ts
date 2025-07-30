@@ -18,4 +18,5 @@ export interface User {
     name: string;
     completed: boolean;
   }[];
+  level: string;
 }

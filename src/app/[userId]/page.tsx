@@ -23,6 +23,7 @@ async function getUserData(userId: string): Promise<User | null> {
       phone: data.phone,
       score: data.score,
       activities: data.activities,
+      level: data.level,
     };
   } else {
     return null;
