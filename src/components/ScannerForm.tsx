@@ -20,7 +20,7 @@ const formSchema = z.object({
 
 const LEVELS = ["Baby Wazer", "Wazer", "Royal Wazer", "King Wazer", "Ultimate Wazer"];
 
-const POINTS_PER_ACTIVITY = 10;
+const POINTS_PER_ACTIVITY = 20;
 
 export default function ScannerForm() {
   const { toast } = useToast();
@@ -66,7 +66,7 @@ export default function ScannerForm() {
 
       toast({
         title: "Success!",
-        description: `Awarded 10 points to ${user.fullName}. New score: ${newScore}`,
+        description: `Awarded ${POINTS_PER_ACTIVITY} points to ${user.fullName}. New score: ${newScore}`,
       });
 
       form.reset();

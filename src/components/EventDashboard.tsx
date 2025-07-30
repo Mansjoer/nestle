@@ -42,7 +42,7 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
     return <WelcomeScreen onStart={() => setShowWelcome(false)} userName={user.fullName} />;
   }
 
-  const progressPercentage = (user.score / (user.activities.length * 10)) * 100;
+  const progressPercentage = (user.score / 100) * 100;
 
   return (
     <div className="min-h-screen bg-accent flex items-center justify-center p-4">
