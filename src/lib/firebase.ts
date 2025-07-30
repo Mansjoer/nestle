@@ -3,12 +3,12 @@ import { getFirestore } from "firebase/firestore";
 
 // IMPORTANT: Replace the placeholder values with your own Firebase project configuration.
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "YOUR_API_KEY",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "YOUR_PROJECT_ID",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "YOUR_SENDER_ID",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "YOUR_APP_ID",
+  apiKey: "AIzaSyAQKnNKwCs8roNmc2ScijAIGWrBXl36HXY",
+  authDomain: "event-tracker-d0k85.firebaseapp.com",
+  projectId: "event-tracker-d0k85",
+  storageBucket: "event-tracker-d0k85.firebasestorage.app",
+  messagingSenderId: "907246123585",
+  appId: "1:907246123585:web:e4b02b7b84f0182e3ce4c0",
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
