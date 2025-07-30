@@ -5,9 +5,10 @@ import { Card, CardContent } from "./ui/card";
 
 type WelcomeScreenProps = {
     onStart: () => void;
+    userName: string;
 }
 
-export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onStart, userName }: WelcomeScreenProps) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
         <div className="w-full max-w-sm mx-auto">
@@ -18,7 +19,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                             <h1 className="text-5xl font-black tracking-tighter">Galaxy FEST</h1>
                         </div>
                         <div className="space-y-4">
-                            <h2 className="text-3xl font-bold">Congratulations!</h2>
+                            <h2 className="text-3xl font-bold">Congratulations, {userName}!</h2>
                             <p className="text-lg opacity-80">You are now a Galaxy Gang, let's explore the Galaxy A World.</p>
                             <Button
                                 onClick={onStart}

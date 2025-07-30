@@ -5,7 +5,7 @@ import type { User } from '@/types';
 import ProgressTracker from './ProgressTracker';
 import QrCodeModal from './QrCodeModal';
 import WelcomeScreen from './WelcomeScreen';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Trophy } from 'lucide-react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -39,22 +39,14 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
   }, [initialUser.id]);
   
   if (showWelcome) {
-    return <WelcomeScreen onStart={() => setShowWelcome(false)} />;
+    return <WelcomeScreen onStart={() => setShowWelcome(false)} userName={user.fullName} />;
   }
 
-  const progressPercentage = (user.score / user.activities.length) * 100;
+  const progressPercentage = (user.score / (user.activities.length * 10)) * 100;
 
   return (
-    <div className="min-h-screen bg-accent">
-      <header className="bg-card shadow-sm p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-800">
-            Welcome, {user.fullName}!
-          </h1>
-          <QrCodeModal userId={user.id} />
-        </div>
-      </header>
-      <main className="p-4 sm:p-6">
+    <div className="min-h-screen bg-accent flex items-center justify-center p-4">
+      <main className="w-full">
         <div className="w-full max-w-md mx-auto bg-card rounded-3xl shadow-lg p-6 space-y-6">
             <div className="text-center">
                 <p className="font-bold text-lg text-gray-800">Your level: {user.level}</p>
@@ -85,6 +77,9 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
                         <ArrowRight className="h-5 w-5 text-gray-400" />
                     </CardContent>
                 </Card>
+            </div>
+            <div className="pt-4">
+                 <QrCodeModal userId={user.id} />
             </div>
         </div>
       </main>

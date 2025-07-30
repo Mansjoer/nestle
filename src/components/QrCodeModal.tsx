@@ -34,7 +34,7 @@ export default function QrCodeModal({ userId }: QrCodeModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="rounded-full">
+        <Button variant="outline" className="rounded-full w-full">
           <QrCode className="mr-2 h-4 w-4" /> Show My Code
         </Button>
       </DialogTrigger>
