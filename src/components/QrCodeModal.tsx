@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { QrCode, X } from 'lucide-react';
+import { QrCode, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,7 +13,6 @@ import {
   DialogClose,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { Skeleton } from './ui/skeleton';
 
 type QrCodeModalProps = {
   userId: string;
@@ -45,18 +44,20 @@ export default function QrCodeModal({ userId }: QrCodeModalProps) {
             A staff member can scan this code to verify your progress.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex items-center justify-center p-4">
+        <div className="flex items-center justify-center p-4 h-64">
           {qrCodeUrl ? (
             <Image
               src={qrCodeUrl}
               alt="User QR Code"
               width={256}
               height={256}
-              className="rounded-lg shadow-md"
+              className="shadow-md"
               data-ai-hint="qr code"
             />
           ) : (
-            <Skeleton className="w-64 h-64 rounded-lg" />
+            <div className="flex items-center justify-center w-full h-full">
+              <Loader2 className="h-16 w-16 animate-spin text-primary" />
+            </div>
           )}
         </div>
         <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
