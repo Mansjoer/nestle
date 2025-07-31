@@ -9,12 +9,14 @@ type ProgressTrackerProps = {
 };
 
 const icons = [
-    { component: Ghost, left: '0%' },
-    { component: CircleUser, left: '25%' },
-    { component: Bot, left: '50%' },
-    { component: Crown, left: '75%' },
-    { component: Star, left: '100%' },
+    { component: Ghost, threshold: 0 },
+    { component: CircleUser, threshold: 20 },
+    { component: Bot, threshold: 40 },
+    { component: Crown, threshold: 60 },
+    { component: Star, threshold: 80 },
 ];
+
+const iconPositions = ['0%', '25%', '50%', '75%', '100%'];
 
 
 export default function ProgressTracker({ value }: ProgressTrackerProps) {
@@ -31,10 +33,10 @@ export default function ProgressTracker({ value }: ProgressTrackerProps) {
       <div className="relative h-8 w-full px-4 mb-4">
          {icons.map((Icon, index) => {
             const IconComp = Icon.component;
-            const isActive = progress >= (parseInt(Icon.left) || 0);
+            const isActive = progress >= Icon.threshold;
             
             return (
-                 <IconComp key={index} className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 transition-colors ${isActive ? 'text-gray-900' : 'text-gray-300'}`} style={{ left: Icon.left, transform: 'translateX(-50%)' }} />
+                 <IconComp key={index} className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 transition-colors ${isActive ? 'text-gray-900' : 'text-gray-300'}`} style={{ left: iconPositions[index], transform: 'translateX(-50%)' }} />
             )
          })}
       </div>
