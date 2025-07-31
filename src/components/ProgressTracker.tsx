@@ -40,7 +40,7 @@ export default function ProgressTracker({ value }: ProgressTrackerProps) {
             )
          })}
       </div>
-      <Progress value={progress} className="w-full h-4 transition-all duration-500 ease-out" />
+      <Progress value={progress} className="w-full h-4 transition-all duration-500 ease-out mt-4" />
       <p className="text-xs text-gray-500">Counting your first miles...</p>
     </div>
   );
