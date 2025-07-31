@@ -43,8 +43,6 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
     setIsWelcomeVisible(false);
   };
 
-  const progressPercentage = (user.score / 100) * 100;
-
   return (
     <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-gray-100">
       {/* Welcome Screen */}
@@ -68,7 +66,7 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
                     <p className="text-sm text-gray-500">Still calculating your rank</p>
                 </div>
               
-                <ProgressTracker value={progressPercentage} />
+                <ProgressTracker value={user.score} />
 
                 <div className="space-y-4">
                     <Card className="bg-gray-50 rounded-2xl">
