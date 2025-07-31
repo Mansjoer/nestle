@@ -56,49 +56,51 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
         <WelcomeScreen onStart={handleStart} userName={user.fullName} />
       </div>
 
-      {!isWelcomeVisible && (
-        <div className={cn("transition-opacity duration-500", isDashboardVisible ? "opacity-100" : "opacity-0")}>
-           <div className="min-h-screen bg-accent flex items-center justify-center p-4">
-            <main className="w-full">
-              <div className="w-full max-w-md mx-auto bg-card rounded-3xl shadow-lg p-6 space-y-6">
-                  <div className="text-center">
-                      <p className="font-bold text-lg text-gray-900">Your level: {user.level}</p>
-                      <p className="text-sm text-gray-500">Still calculating your rank</p>
-                  </div>
-                
-                  <ProgressTracker value={progressPercentage} />
+      <div className={cn(
+          "transition-opacity duration-500", 
+          isDashboardVisible ? "opacity-100" : "opacity-0",
+          !isWelcomeVisible ? "block" : "hidden"
+        )}>
+          <div className="min-h-screen bg-accent flex items-center justify-center p-4">
+          <main className="w-full">
+            <div className="w-full max-w-md mx-auto bg-card rounded-3xl shadow-lg p-6 space-y-6">
+                <div className="text-center">
+                    <p className="font-bold text-lg text-gray-900">Your level: {user.level}</p>
+                    <p className="text-sm text-gray-500">Still calculating your rank</p>
+                </div>
+              
+                <ProgressTracker value={progressPercentage} />
 
-                  <div className="space-y-4">
-                      <Card className="bg-gray-50 rounded-2xl">
-                          <CardContent className="p-4 flex justify-between items-center">
-                              <div>
-                                  <p className="font-bold text-gray-800">Your Points: {user.score}</p>
-                                  <p className="text-xs text-gray-500">Drive and report to earn points. Learn how else to rack 'em up.</p>
-                              </div>
-                              <ArrowRight className="h-5 w-5 text-gray-400" />
-                          </CardContent>
-                      </Card>
-                      <Card className="bg-gray-50 rounded-2xl">
-                          <CardContent className="p-4 flex justify-between items-center">
-                              <div className="flex items-center gap-4">
-                                  <Trophy className="h-6 w-6 text-gray-900" />
-                                  <div>
-                                      <p className="font-bold text-gray-800">About Levels</p>
-                                      <p className="text-xs text-gray-500">Advance to get more reporting influence and a customized Wazer.</p>
-                                  </div>
-                              </div>
-                              <ArrowRight className="h-5 w-5 text-gray-400" />
-                          </CardContent>
-                      </Card>
-                  </div>
-                  <div className="pt-4">
-                      <QrCodeModal userId={user.id} />
-                  </div>
-              </div>
-            </main>
-          </div>
+                <div className="space-y-4">
+                    <Card className="bg-gray-50 rounded-2xl">
+                        <CardContent className="p-4 flex justify-between items-center">
+                            <div>
+                                <p className="font-bold text-gray-800">Your Points: {user.score}</p>
+                                <p className="text-xs text-gray-500">Drive and report to earn points. Learn how else to rack 'em up.</p>
+                            </div>
+                            <ArrowRight className="h-5 w-5 text-gray-400" />
+                        </CardContent>
+                    </Card>
+                    <Card className="bg-gray-50 rounded-2xl">
+                        <CardContent className="p-4 flex justify-between items-center">
+                            <div className="flex items-center gap-4">
+                                <Trophy className="h-6 w-6 text-gray-900" />
+                                <div>
+                                    <p className="font-bold text-gray-800">About Levels</p>
+                                    <p className="text-xs text-gray-500">Advance to get more reporting influence and a customized Wazer.</p>
+                                </div>
+                            </div>
+                            <ArrowRight className="h-5 w-5 text-gray-400" />
+                        </CardContent>
+                    </Card>
+                </div>
+                <div className="pt-4">
+                    <QrCodeModal userId={user.id} />
+                </div>
+            </div>
+          </main>
         </div>
-      )}
+      </div>
     </>
   );
 }
