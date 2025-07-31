@@ -68,7 +68,7 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
                 <Card className="bg-gray-50 rounded-2xl">
                      <CardContent className="p-4 flex justify-between items-center">
                         <div className="flex items-center gap-4">
-                            <Trophy className="h-6 w-6 text-primary" />
+                            <Trophy className="h-6 w-6 text-gray-900" />
                             <div>
                                 <p className="font-bold text-gray-800">About Levels</p>
                                 <p className="text-xs text-gray-500">Advance to get more reporting influence and a customized Wazer.</p>
