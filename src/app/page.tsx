@@ -8,7 +8,7 @@ export default function Home() {
         <Card className="shadow-2xl rounded-3xl">
           <CardHeader className="text-center space-y-2 pt-8">
             <h1 className="text-4xl font-black tracking-tighter text-gray-800">Nestle</h1>
-            <CardDescription className="text-base text-gray-500">Register to explore the Galaxy A World</CardDescription>
+            <CardDescription className="text-base text-gray-500">Dummy Tagline</CardDescription>
           </CardHeader>
           <CardContent className="p-8">
             <RegistrationForm />
