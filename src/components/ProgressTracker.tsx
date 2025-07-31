@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Progress } from "@/components/ui/progress";
@@ -29,13 +28,13 @@ export default function ProgressTracker({ value }: ProgressTrackerProps) {
 
   return (
     <div className="space-y-4 text-center">
-      <div className="relative h-8 w-full px-4 mb-2">
+      <div className="relative h-8 w-full px-4 mb-4">
          {icons.map((Icon, index) => {
             const IconComp = Icon.component;
             const isActive = progress >= (parseInt(Icon.left) || 0);
             
             return (
-                 <IconComp key={index} className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 transition-colors ${isActive ? 'text-primary' : 'text-gray-300'}`} style={{ left: Icon.left, transform: 'translateX(-50%)' }} />
+                 <IconComp key={index} className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 transition-colors ${isActive ? 'text-gray-900' : 'text-gray-300'}`} style={{ left: Icon.left, transform: 'translateX(-50%)' }} />
             )
          })}
       </div>
