@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { QrCode, X, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { QrCode, X, Loader2, ArrowRight } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -13,6 +12,7 @@ import {
   DialogClose,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { Card, CardContent } from '@/components/ui/card';
 
 type QrCodeModalProps = {
   userId: string;
@@ -33,9 +33,17 @@ export default function QrCodeModal({ userId }: QrCodeModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="rounded-full w-full">
-          <QrCode className="mr-2 h-4 w-4" /> Show My Code
-        </Button>
+        <Card className="bg-gray-50 rounded-2xl cursor-pointer hover:bg-gray-100 transition-colors">
+            <CardContent className="p-4 flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                    <QrCode className="h-6 w-6 text-gray-900" />
+                    <div>
+                        <p className="font-bold text-gray-800">Show My Code</p>
+                    </div>
+                </div>
+                <ArrowRight className="h-5 w-5 text-gray-400" />
+            </CardContent>
+        </Card>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md bg-card">
         <DialogHeader>
