@@ -103,7 +103,7 @@ export default function RegistrationForm() {
             <FormItem>
               <FormLabel>Phone</FormLabel>
               <FormControl>
-                <Input type="tel" placeholder="(123) 456-7890" {...field} />
+                <Input type="tel" placeholder="0812 3456 7890" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
