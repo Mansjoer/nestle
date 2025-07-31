@@ -18,8 +18,7 @@ type EventDashboardProps = {
 export default function EventDashboard({ initialUser }: EventDashboardProps) {
   const [user, setUser] = useState<User>(initialUser);
   const [isWelcomeVisible, setIsWelcomeVisible] = useState(true);
-  const [isDashboardVisible, setIsDashboardVisible] = useState(false);
-
+  
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", initialUser.id), (doc) => {
       if (doc.exists()) {
@@ -42,24 +41,24 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
   
   const handleStart = () => {
     setIsWelcomeVisible(false);
-    // Allow time for fade-out before fading in the dashboard
-    setTimeout(() => {
-      setIsDashboardVisible(true);
-    }, 500); 
   };
 
   const progressPercentage = (user.score / 100) * 100;
 
   return (
-    <>
-      <div className={cn("transition-opacity duration-500", isWelcomeVisible ? "opacity-100" : "opacity-0 pointer-events-none")}>
+    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-gray-100">
+      {/* Welcome Screen */}
+      <div className={cn(
+        "absolute inset-0 transition-opacity duration-500", 
+        isWelcomeVisible ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+      )}>
         <WelcomeScreen onStart={handleStart} userName={user.fullName} />
       </div>
 
+      {/* Dashboard Screen */}
       <div className={cn(
-          "transition-opacity duration-500", 
-          isDashboardVisible ? "opacity-100" : "opacity-0",
-          !isWelcomeVisible ? "block" : "hidden"
+          "absolute inset-0 transition-opacity duration-500 delay-300", 
+          !isWelcomeVisible ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
         )}>
           <div className="min-h-screen bg-accent flex items-center justify-center p-4">
           <main className="w-full">
@@ -101,6 +100,6 @@ export default function EventDashboard({ initialUser }: EventDashboardProps) {
           </main>
         </div>
       </div>
-    </>
+    </div>
   );
 }
