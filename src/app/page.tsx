@@ -7,7 +7,7 @@ export default function Home() {
       <div className="w-full max-w-md">
         <Card className="shadow-2xl rounded-3xl">
           <CardHeader className="text-center space-y-2 pt-8">
-            <h1 className="text-4xl font-black tracking-tighter text-gray-800">Nestle</h1>
+            <h1 className="text-4xl font-black tracking-tighter text-gray-800">Dummy Title</h1>
             <CardDescription className="text-base text-gray-500">Dummy Tagline</CardDescription>
           </CardHeader>
           <CardContent className="p-8">
